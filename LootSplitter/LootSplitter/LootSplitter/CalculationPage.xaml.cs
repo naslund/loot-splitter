@@ -21,6 +21,11 @@ namespace LootSplitter
             _viewModel = new CalculationPageViewModel(participants);
             BindingContext = _viewModel;
         }
+
+        private void Dismiss_OnClicked(object sender, EventArgs e)
+        {
+            Navigation.PopModalAsync();
+        }
     }
 
     public class CalculationPageViewModel : INotifyPropertyChanged
