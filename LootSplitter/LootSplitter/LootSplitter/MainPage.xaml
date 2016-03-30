@@ -14,8 +14,8 @@
                  Orientation="Vertical"
                  Spacing="15">
       <StackLayout Orientation="Horizontal">
-        <Entry x:Name="nameInput" HorizontalOptions="FillAndExpand" Text="{Binding Name}" Placeholder="Name" />
-        <Entry x:Name="wasteInput" HorizontalOptions="FillAndExpand" Text="{Binding Waste}" Placeholder="Waste" Keyboard="Keyboard.Numeric" />
+        <Entry HorizontalOptions="FillAndExpand" Text="{Binding Name}" Placeholder="Name" />
+        <Entry HorizontalOptions="FillAndExpand" Text="{Binding Waste}" Placeholder="Waste" Keyboard="Keyboard.Numeric" />
       </StackLayout>
       <Button Text="Add" Clicked="AddParticipant_OnClicked" IsEnabled="{Binding AddEnabled}" />
       <ListView ItemsSource="{Binding Participants}" SelectedItem="{Binding SelectedParticipant}">
