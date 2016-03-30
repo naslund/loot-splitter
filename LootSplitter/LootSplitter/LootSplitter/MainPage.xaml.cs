@@ -24,17 +24,7 @@ namespace LootSplitter
 
         private void AddParticipant_OnClicked(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(nameInput.Text))
-                return;
-
-            decimal waste;
-            if (decimal.TryParse(wasteInput.Text, out waste) == false)
-                return;
-
-            if (waste <= 0)
-                return;
-
-            _viewModel.Participants.Add(new Participant { Name = nameInput.Text, Waste = decimal.Parse(wasteInput.Text) });
+            _viewModel.AddParticipant();
         }
 
         private void Clear_OnClicked(object sender, EventArgs e)
@@ -53,12 +43,60 @@ namespace LootSplitter
 
     public class MainPageViewModel : INotifyPropertyChanged
     {
+        private string _name;
+        private string _waste;
+        private bool _addEnabled;
         private ObservableCollection<Participant> participants;
         private Participant selectedParticipant;
 
         public MainPageViewModel()
         {
             Participants = new ObservableCollection<Participant>();
+        }
+
+        public void AddParticipant()
+        {
+            Participants.Add(new Participant { Name = Name, Waste = decimal.Parse(Waste) });
+            Name = string.Empty;
+            Waste = string.Empty;
+        }
+
+        public void ToggleAdd()
+        {
+            decimal waste;
+            AddEnabled = string.IsNullOrEmpty(Name) == false && decimal.TryParse(Waste, out waste) && waste < 0 == false;
+        }
+
+        public string Name
+        {
+            get { return _name; }
+            set
+            {
+                _name = value;
+                OnPropertyChanged();
+                ToggleAdd();
+            }
+        }
+
+        public string Waste
+        {
+            get { return _waste; }
+            set
+            {
+                _waste = value;
+                OnPropertyChanged();
+                ToggleAdd();
+            }
+        }
+
+        public bool AddEnabled
+        {
+            get { return _addEnabled; }
+            set
+            {
+                _addEnabled = value;
+                OnPropertyChanged();
+            }
         }
 
         public ObservableCollection<Participant> Participants
