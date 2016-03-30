@@ -26,27 +26,44 @@ namespace LootSplitter
         {
             Navigation.PopModalAsync();
         }
+
+        private void Calculate_OnClicked(object sender, EventArgs e)
+        {
+            _viewModel.CalculateProfit(decimal.Parse(LootValue.Text));
+        }
     }
 
     public class CalculationPageViewModel : INotifyPropertyChanged
     {
         private ObservableCollection<Participant> _participants;
+        private ObservableCollection<ParticipantOutput> _participantsOutput;
 
         public CalculationPageViewModel(ObservableCollection<Participant> participants)
         {
             _participants = participants;
+            ParticipantsOutput = new ObservableCollection<ParticipantOutput>();
         }
 
-        public ObservableCollection<Participant> Participants
+        public ObservableCollection<ParticipantOutput> ParticipantsOutput
         {
             get
             {
-                return _participants;
+                return _participantsOutput;
             }
             set
             {
-                _participants = value;
+                _participantsOutput = value;
                 OnPropertyChanged();
+            }
+        }
+
+        public void CalculateProfit(decimal lootValue)
+        {
+            decimal totalProfit = lootValue - _participants.Sum(x => x.Waste);
+            ParticipantsOutput.Clear();
+            foreach (Participant participant in _participants)
+            {
+                ParticipantsOutput.Add(new ParticipantOutput { Name = participant.Name, Profit = participant.Waste + totalProfit / _participants.Count });
             }
         }
 

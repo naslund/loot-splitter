@@ -12,4 +12,10 @@ namespace LootSplitter
 
         public decimal Waste { get; set; }
     }
+
+    public class ParticipantOutput
+    {
+        public string Name { get; set; }
+        public decimal Profit { get; set; }
+    }
 }

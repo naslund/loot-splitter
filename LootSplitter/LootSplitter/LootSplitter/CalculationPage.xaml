@@ -13,13 +13,15 @@
                  HorizontalOptions="FillAndExpand"
                  Orientation="Vertical"
                  Spacing="15">
-      <ListView ItemsSource="{Binding Participants}" SelectedItem="{Binding SelectedParticipant}">
+      <Entry x:Name="LootValue" Placeholder="Loot Value" />
+      <ListView ItemsSource="{Binding ParticipantsOutput}">
         <ListView.ItemTemplate>
           <DataTemplate>
-            <TextCell Text="{Binding Name}" Detail="{Binding Waste, StringFormat='{0:N0}'}" />
+            <TextCell Text="{Binding Name}" Detail="{Binding Profit, StringFormat='{0:N0}'}" />
           </DataTemplate>
         </ListView.ItemTemplate>
       </ListView>
+      <Button Text="Calculate" Clicked="Calculate_OnClicked" />
       <Button Text="Dismiss" Clicked="Dismiss_OnClicked" />
     </StackLayout>
   </ContentPage.Content>
