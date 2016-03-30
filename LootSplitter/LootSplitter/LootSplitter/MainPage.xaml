@@ -25,8 +25,8 @@
           </DataTemplate>
         </ListView.ItemTemplate>
       </ListView>
-      <Button Text="Clear" Clicked="Clear_OnClicked" />
-      <Button Text="Calculate" Clicked="Calculate_OnClicked" />
+      <Button Text="Clear" Clicked="Clear_OnClicked" IsVisible="{Binding ClearVisible}" />
+      <Button Text="{Binding ContinueText}" Clicked="Continue_OnClicked" IsEnabled="{Binding ContinueEnabled}" />
     </StackLayout>
   </ContentPage.Content>
 </ContentPage>

@@ -29,10 +29,10 @@ namespace LootSplitter
 
         private void Clear_OnClicked(object sender, EventArgs e)
         {
-            _viewModel.Participants.Clear();
+            _viewModel.ClearParticipants();
         }
 
-        private void Calculate_OnClicked(object sender, EventArgs e)
+        private void Continue_OnClicked(object sender, EventArgs e)
         {
             if (_viewModel.Participants.Count < 1)
                 return;
@@ -46,25 +46,49 @@ namespace LootSplitter
         private string _name;
         private string _waste;
         private bool _addEnabled;
-        private ObservableCollection<Participant> participants;
-        private Participant selectedParticipant;
+        private bool _continueEnabled;
+        private bool _clearVisible;
+        private ObservableCollection<Participant> _participants;
+        private Participant _selectedParticipant;
+        private string _continueText;
 
         public MainPageViewModel()
         {
             Participants = new ObservableCollection<Participant>();
+            ToggleContinue();
         }
 
         public void AddParticipant()
         {
             Participants.Add(new Participant { Name = Name, Waste = decimal.Parse(Waste) });
+            ToggleClear();
+            ToggleContinue();
             Name = string.Empty;
             Waste = string.Empty;
+        }
+
+        public void ClearParticipants()
+        {
+            Participants.Clear();
+            ToggleClear();
+            ToggleContinue();
         }
 
         public void ToggleAdd()
         {
             decimal waste;
             AddEnabled = string.IsNullOrEmpty(Name) == false && decimal.TryParse(Waste, out waste) && waste < 0 == false;
+        }
+
+        public void ToggleClear()
+        {
+            ClearVisible = Participants.Count > 0;
+        }
+
+        public void ToggleContinue()
+        {
+            ContinueEnabled = Participants.Count > 1;
+            ContinueText = ContinueEnabled ? "Continue" : "Add at least 2 participants";
         }
 
         public string Name
@@ -99,22 +123,52 @@ namespace LootSplitter
             }
         }
 
-        public ObservableCollection<Participant> Participants
+        public bool ContinueEnabled
         {
-            get { return participants; }
+            get { return _continueEnabled; }
             set
             {
-                participants = value;
+                _continueEnabled = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool ClearVisible
+        {
+            get { return _clearVisible; }
+            set
+            {
+                _clearVisible = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string ContinueText
+        {
+            get { return _continueText; }
+            set
+            {
+                _continueText = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<Participant> Participants
+        {
+            get { return _participants; }
+            set
+            {
+                _participants = value;
                 OnPropertyChanged();
             }
         }
 
         public Participant SelectedParticipant
         {
-            get { return selectedParticipant; }
+            get { return _selectedParticipant; }
             set
             {
-                selectedParticipant = value;
+                _selectedParticipant = value;
                 OnPropertyChanged();
             }
         }
