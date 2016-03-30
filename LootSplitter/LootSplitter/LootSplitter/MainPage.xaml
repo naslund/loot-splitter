@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LootSplitter.MainPage">
+  <ContentPage.Padding>
+    <OnPlatform x:TypeArguments="Thickness"
+                iOS="20, 40, 20, 20"
+                Android="20, 20, 20, 20"
+                WinPhone="20, 20, 20, 20" />
+  </ContentPage.Padding>
+  <ContentPage.Content>
+    <StackLayout VerticalOptions="FillAndExpand"
+                 HorizontalOptions="FillAndExpand"
+                 Orientation="Vertical"
+                 Spacing="15">
+      <StackLayout Orientation="Horizontal">
+        <Entry x:Name="nameInput" HorizontalOptions="FillAndExpand" Placeholder="Name" />
+        <Entry x:Name="wasteInput" HorizontalOptions="FillAndExpand" Placeholder="Waste" Keyboard="Keyboard.Numeric" />
+      </StackLayout>
+      <Button Text="Add" Clicked="AddParticipant_OnClicked" />
+      <ListView ItemsSource="{Binding Participants}" SelectedItem="{Binding SelectedParticipant}">
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <TextCell Text="{Binding Name}" Detail="{Binding Waste, StringFormat='{0:N0}'}" />
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+      <Button Text="Clear" Clicked="Clear_OnClicked" />
+      <Button Text="Calculate" Clicked="Calculate_OnClicked" />
+    </StackLayout>
+  </ContentPage.Content>
+</ContentPage>
