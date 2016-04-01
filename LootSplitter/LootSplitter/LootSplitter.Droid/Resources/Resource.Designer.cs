@@ -3271,7 +3271,7 @@ namespace LootSplitter.Droid
 			public const int ic_setting_light = 2130837589;
 			
 			// aapt resource value: 0x7f020056
-			public const int icon = 2130837590;
+			public const int Icon = 2130837590;
 			
 			// aapt resource value: 0x7f020057
 			public const int mr_ic_cast_dark = 2130837591;
@@ -3309,8 +3309,14 @@ namespace LootSplitter.Droid
 			// aapt resource value: 0x7f020062
 			public const int mr_ic_settings_light = 2130837602;
 			
+			// aapt resource value: 0x7f020065
+			public const int notification_template_icon_bg = 2130837605;
+			
 			// aapt resource value: 0x7f020063
-			public const int notification_template_icon_bg = 2130837603;
+			public const int splashimage = 2130837603;
+			
+			// aapt resource value: 0x7f020064
+			public const int splashscreen = 2130837604;
 			
 			static Drawable()
 			{
@@ -4459,6 +4465,15 @@ namespace LootSplitter.Droid
 			
 			// aapt resource value: 0x7f070006
 			public const int CardView_Light = 2131165190;
+			
+			// aapt resource value: 0x7f070145
+			public const int LootSplitterTheme = 2131165509;
+			
+			// aapt resource value: 0x7f070144
+			public const int LootSplitterTheme_Base = 2131165508;
+			
+			// aapt resource value: 0x7f070146
+			public const int LootSplitterTheme_Splash = 2131165510;
 			
 			// aapt resource value: 0x7f070016
 			public const int Platform_AppCompat = 2131165206;
