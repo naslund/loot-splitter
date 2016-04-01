@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using LootSplitter.Annotations;
 using Xamarin.Forms;
 
@@ -29,12 +26,14 @@ namespace LootSplitter
 
         private void Calculate_OnClicked(object sender, EventArgs e)
         {
-            _viewModel.CalculateProfit(decimal.Parse(LootValue.Text));
+            _viewModel.CalculateProfit();
         }
     }
 
     public class CalculationPageViewModel : INotifyPropertyChanged
     {
+        private string _lootValue;
+        private bool _equalShare;
         private ObservableCollection<Participant> _participants;
         private ObservableCollection<ParticipantOutput> _participantsOutput;
 
@@ -42,6 +41,19 @@ namespace LootSplitter
         {
             _participants = participants;
             ParticipantsOutput = new ObservableCollection<ParticipantOutput>();
+        }
+
+        public ObservableCollection<Participant> Participants
+        {
+            get
+            {
+                return _participants;
+            }
+            set
+            {
+                _participants = value;
+                OnPropertyChanged();
+            }
         }
 
         public ObservableCollection<ParticipantOutput> ParticipantsOutput
@@ -57,13 +69,48 @@ namespace LootSplitter
             }
         }
 
-        public void CalculateProfit(decimal lootValue)
+        public string LootValue
         {
-            decimal totalProfit = lootValue - _participants.Sum(x => x.Waste);
-            ParticipantsOutput.Clear();
-            foreach (Participant participant in _participants)
+            get { return _lootValue; }
+            set
             {
-                ParticipantsOutput.Add(new ParticipantOutput { Name = participant.Name, Profit = participant.Waste + totalProfit / _participants.Count });
+                if (value.Length < 16)
+                    if (value.ToCharArray().All(char.IsDigit))
+                        _lootValue = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(CalculateVisible));
+            }
+        }
+
+        public bool CalculateVisible => LootValue.IsParsableToLongAndGreaterThanOrEqualToZero() && _participants.Count > 1;
+
+        public bool EqualShare
+        {
+            get { return _equalShare; }
+            set
+            {
+                _equalShare = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public void CalculateProfit()
+        {
+            long lootValue = long.Parse(LootValue);
+            // Todo: Find different solution? WinPhone throws exception on .Clear()
+            while (ParticipantsOutput.Count > 0) 
+                ParticipantsOutput.RemoveAt(0);
+
+            if (EqualShare)
+            {
+                foreach (Participant participant in Participants)
+                    ParticipantsOutput.Add(new ParticipantOutput { Name = participant.Name, Share = lootValue / Participants.Count });
+            }
+            else
+            {
+                long totalProfit = lootValue - _participants.Sum(x => x.Waste);
+                foreach (Participant participant in Participants)
+                    ParticipantsOutput.Add(new ParticipantOutput { Name = participant.Name, Share = participant.Waste + totalProfit / Participants.Count });
             }
         }
 

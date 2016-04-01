@@ -39,6 +39,7 @@
     <Compile Include="CalculationPage.xaml.cs">
       <DependentUpon>CalculationPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Extensions.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

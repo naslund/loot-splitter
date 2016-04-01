@@ -13,16 +13,23 @@
                  HorizontalOptions="FillAndExpand"
                  Orientation="Vertical"
                  Spacing="15">
-      <Entry x:Name="LootValue" Placeholder="Loot Value" />
+      <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+        <Entry Text="{Binding LootValue}" Placeholder="Loot Value" Keyboard="Keyboard.Numeric" HorizontalOptions="FillAndExpand" />
+        <StackLayout Orientation="Horizontal" HorizontalOptions="End">
+          <Label Text="Equal Profit" VerticalTextAlignment="Center" />
+          <Switch IsToggled="{Binding EqualShare}" />
+          <Label Text="Equal Share" VerticalTextAlignment="Center" />
+        </StackLayout>
+      </StackLayout>
+      <Button Text="Calculate" Clicked="Calculate_OnClicked" BackgroundColor="#2ecc71" IsVisible="{Binding CalculateVisible}" />
       <ListView ItemsSource="{Binding ParticipantsOutput}">
         <ListView.ItemTemplate>
           <DataTemplate>
-            <TextCell Text="{Binding Name}" Detail="{Binding Profit, StringFormat='{0:N0}'}" />
+            <TextCell Text="{Binding Name}" Detail="{Binding Share, StringFormat='{0:N0}'}" />
           </DataTemplate>
         </ListView.ItemTemplate>
       </ListView>
-      <Button Text="Calculate" Clicked="Calculate_OnClicked" />
-      <Button Text="Dismiss" Clicked="Dismiss_OnClicked" />
+      <Button Text="Return" Clicked="Dismiss_OnClicked" BackgroundColor="#e74c3c" VerticalOptions="End" />
     </StackLayout>
   </ContentPage.Content>
 </ContentPage>

@@ -17,16 +17,17 @@
         <Entry HorizontalOptions="FillAndExpand" Text="{Binding Name}" Placeholder="Name" />
         <Entry HorizontalOptions="FillAndExpand" Text="{Binding Waste}" Placeholder="Waste" Keyboard="Keyboard.Numeric" />
       </StackLayout>
-      <Button Text="Add" Clicked="AddParticipant_OnClicked" IsEnabled="{Binding AddEnabled}" />
-      <ListView ItemsSource="{Binding Participants}" SelectedItem="{Binding SelectedParticipant}">
+      <Button Text="Add" Clicked="AddParticipant_OnClicked" IsVisible="{Binding AddEnabled}" BackgroundColor="#2ecc71" />
+      <ListView ItemsSource="{Binding Participants}">
         <ListView.ItemTemplate>
           <DataTemplate>
             <TextCell Text="{Binding Name}" Detail="{Binding Waste, StringFormat='{0:N0}'}" />
           </DataTemplate>
         </ListView.ItemTemplate>
       </ListView>
-      <Button Text="Clear" Clicked="Clear_OnClicked" IsVisible="{Binding ClearVisible}" />
-      <Button Text="{Binding ContinueText}" Clicked="Continue_OnClicked" IsEnabled="{Binding ContinueEnabled}" />
+      <Label Text="{Binding TotalWaste, StringFormat='Total Waste: {0:N0}'}" IsVisible="{Binding ClearVisible}" HorizontalTextAlignment="End" />
+      <Button Text="Clear" Clicked="Clear_OnClicked" IsVisible="{Binding ClearVisible}" BackgroundColor="#e74c3c" />
+      <Button Text="Continue" Clicked="Continue_OnClicked" IsVisible="{Binding ContinueVisible}" BackgroundColor="#2ecc71" />
     </StackLayout>
   </ContentPage.Content>
 </ContentPage>
